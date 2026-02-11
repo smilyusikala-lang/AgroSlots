@@ -59,14 +59,17 @@ button:hover {
 
 /* Home page styles */
 .home-container {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(120deg, #2E7D32, #66BB6A);
+    body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(120deg, #4CAF50, #2E7D32);
+    min-height: 100vh; /* keeps full height for background */
+    display: block;    /* remove flex centering */
+    text-align: left; /* aligns text to the left instead of center */
+    padding: 20px;    /* optional spacing from top/left */
     color: white;
-    text-align: center;
+}
+}
 }
 
 .home-container h1 {
