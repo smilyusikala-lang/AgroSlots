@@ -2,27 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AgroSlots - OTP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroSlots OTP</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>🌿 AgroSlots Login</h1>
+<div class="otp-container">
+    <h1>🌿 AgroSlots</h1>
+    <p>Enter your phone number to receive OTP</p>
 
-    <!-- Phone number input -->
-    <input type="text" id="phone" placeholder="Enter your phone number" required>
-    <button id="generateBtn">Generate OTP</button>
-
-    <!-- OTP input (hidden initially) -->
-    <div id="otpSection" style="display:none; margin-top:10px;">
-        <input type="text" id="otpInput" placeholder="Enter OTP">
-        <button id="verifyBtn">Verify OTP</button>
-    </div>
+    <input type="text" id="phone" placeholder="Enter Phone Number" required>
+    <button id="generateOtpBtn">Generate OTP</button>
 </div>
 
-<!-- Link your JS -->
-<script src="script.js"></script>
+<script>
+document.getElementById('generateOtpBtn').addEventListener('click', async () => {
+    const phone = document.getElementById('phone').value.trim();
+
+    if (!phone) {
+        alert("Please enter your phone number");
+        return;
+    }
+
+    try {
+        const res = await fetch('https://your-backend.vercel.app/api/generate-otp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            alert("Your OTP is: " + data.otp);
+            // After successful OTP, redirect to main page
+            window.location.href = "main.html"; // change to your main page
+        } else {
+            alert("Error generating OTP");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Server error. Try again later.");
+    }
+});
+</script>
+
 </body>
 </html>
