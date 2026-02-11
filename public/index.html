@@ -31,16 +31,19 @@ async function generateOTP() {
         <!-- Farmer Details -->
         <input type="text" id="name" placeholder="Farmer Full Name" required>
 
-        <input type="tel" id="mobile" placeholder="Mobile Number"
-               pattern="[0-9]{10}" maxlength="10" required>
-
-        <input type="text" id="location" placeholder="Village / Location" required>
+        <input type="text" id="name" placeholder="Village name" required>
 
         <!-- Crop Details -->
         <input type="text" id="crop" placeholder="Crop Name" required>
 
         <input type="number" id="quantity" placeholder="Crop Quantity (in Kg)" required>
 
+        <input type="text" name="industry" placeholder="Industry Name" required>
+
+        <input type="text" name="location" placeholder="Industry Location" required>
+
+    
+    </form>
         <label>Crop Quality Rating:</label>
         <select id="rating" required>
             <option value="">Select Rating</option>
@@ -75,7 +78,6 @@ form.addEventListener('submit', function(e)
 
     const data = {
         name: document.getElementById('name').value,
-        mobile: document.getElementById('mobile').value,
         location: document.getElementById('location').value,
         crop: document.getElementById('crop').value,
         quantity: document.getElementById('quantity').value,
@@ -84,7 +86,7 @@ form.addEventListener('submit', function(e)
         time: document.getElementById('time').value
     };
 
-    await fetch('/book', {
+    await fetch('/book', { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
