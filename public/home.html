@@ -2,19 +2,27 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Agro Slots </title>
+    <title>AgroSlots - OTP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <div class="home-container">
-        <h1>🌾 Welcome to Agro Slots</h1>
-        <p>Digital Appointment System for Seamless Crop Sales</p>
+<div class="container">
+    <h1>🌿 AgroSlots Login</h1>
 
-        <a href="index.html" class="btn">Book Your Slot</a>
+    <!-- Phone number input -->
+    <input type="text" id="phone" placeholder="Enter your phone number" required>
+    <button id="generateBtn">Generate OTP</button>
+
+    <!-- OTP input (hidden initially) -->
+    <div id="otpSection" style="display:none; margin-top:10px;">
+        <input type="text" id="otpInput" placeholder="Enter OTP">
+        <button id="verifyBtn">Verify OTP</button>
     </div>
+</div>
 
+<!-- Link your JS -->
+<script src="script.js"></script>
 </body>
 </html>

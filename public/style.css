@@ -1,4 +1,4 @@
-/* Reset and basic styles */
+/* Reset default browser styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,18 +6,20 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Body background and default layout */
+/* Body style */
 body {
     background: linear-gradient(120deg, #4CAF50, #2E7D32);
     min-height: 100vh;
+    padding: 20px;
+    color: #333;
 }
 
-/* Container for forms/pages */
-.container, .form-container {
-    max-width: 400px;
-    margin: 20px auto; /* places content from top, not center */
+/* Container for the form */
+.container {
     background: white;
     padding: 25px 30px;
+    max-width: 500px;
+    margin: 40px auto; /* positions form away from top, not center */
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
@@ -25,30 +27,43 @@ body {
 /* Headings */
 h1 {
     margin-bottom: 15px;
-    font-size: 22px;
+    font-size: 26px;
     color: #2E7D32;
     text-align: center;
 }
 
-/* Input fields */
+.subtitle {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Inputs and select boxes */
 input, select {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     margin: 8px 0;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
 /* Buttons */
 button {
     margin-top: 12px;
-    padding: 9px;
+    padding: 10px;
     width: 100%;
     border: none;
     border-radius: 5px;
     background-color: #4CAF50;
     color: white;
-    font-size: 15px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -56,13 +71,16 @@ button:hover {
     background-color: #388E3C;
 }
 
-/* Home page styles */
+/* OTP button style */
+button[type="button"] {
+    margin-bottom: 20px;
+}
+
+/* Home page container (if needed) */
 .home-container {
-    min-height: 100vh;
     padding: 40px 20px;
     background: linear-gradient(120deg, #2E7D32, #66BB6A);
     color: white;
-    text-align: center;
 }
 
 .home-container h1 {
@@ -87,19 +105,4 @@ button:hover {
 
 .btn:hover {
     background: #e8f5e9;
-}
-
-/* Labels for forms */
-label {
-    display: block;
-    margin-top: 10px;
-    text-align: left;
-    font-weight: bold;
-}
-
-/* Make selects look consistent */
-select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
 }

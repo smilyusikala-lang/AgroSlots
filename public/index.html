@@ -6,44 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
-<script>
-async function generateOTP() {
-  const res = await fetch('/api/server');
-  const data = await res.json();
-
-  if (data.success) {
-    alert("Your OTP is: " + data.otp);
-  } else {
-    alert("Error generating OTP");
-  }
-}
-</script>
-
-<button onclick="generateOTP()">Generate OTP</button>
 <body>
 
 <div class="container">
     <h1>🌿 Agro Slots Booking</h1>
     <p class="subtitle">Enter Farmer & Crop Details</p>
 
+    <button type="button" onclick="generateOTP()">Generate OTP</button>
+
     <form id="slotForm">
-
         <!-- Farmer Details -->
-        <input type="text" id="name" placeholder="Farmer Full Name" required>
-
-        <input type="text" id="name" placeholder="Village name" required>
+        <input type="text" id="farmerName" placeholder="Farmer Full Name" required>
+        <input type="text" id="village" placeholder="Village Name" required>
 
         <!-- Crop Details -->
         <input type="text" id="crop" placeholder="Crop Name" required>
-
         <input type="number" id="quantity" placeholder="Crop Quantity (in Kg)" required>
 
-        <input type="text" name="industry" placeholder="Industry Name" required>
+        <input type="text" id="industryName" placeholder="Industry Name" required>
+        <input type="text" id="industryLocation" placeholder="Industry Location" required>
 
-        <input type="text" name="location" placeholder="Industry Location" required>
-
-    
-    </form>
         <label>Crop Quality Rating:</label>
         <select id="rating" required>
             <option value="">Select Rating</option>
@@ -56,7 +38,6 @@ async function generateOTP() {
 
         <!-- Slot Details -->
         <input type="date" id="date" required>
-
         <select id="time" required>
             <option value="">Select Time Slot</option>
             <option>09:00 AM</option>
@@ -70,33 +51,57 @@ async function generateOTP() {
 </div>
 
 <script>
-const form = document.querySelector('Form');
+async function generateOTP() {
+    try {
+        const res = await fetch('/api/server'); // make sure backend URL is correct
+        const data = await res.json();
+        if (data.success) {
+            alert("Your OTP is: " + data.otp);
+        } else {
+            alert("Error generating OTP");
+        }
+    } catch(err) {
+        console.error(err);
+        alert("Backend error while generating OTP");
+    }
+}
 
-form.addEventListener('submit', function(e)
-{
+const form = document.getElementById('slotForm');
+
+form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
     const data = {
-        name: document.getElementById('name').value,
-        location: document.getElementById('location').value,
+        farmerName: document.getElementById('farmerName').value,
+        village: document.getElementById('village').value,
         crop: document.getElementById('crop').value,
         quantity: document.getElementById('quantity').value,
-        industryname: document.getElementById('industry name').value,
-        industrylocation: document.getElementById('industry location').value,
+        industryName: document.getElementById('industryName').value,
+        industryLocation: document.getElementById('industryLocation').value,
         rating: document.getElementById('rating').value,
         date: document.getElementById('date').value,
         time: document.getElementById('time').value
     };
 
-    await fetch('/book', { 
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
+    try {
+        const response = await fetch('/book', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
 
-    window.location.href = "success.html";
+        const result = await response.json();
+        if(result.success){
+            window.location.href = "success.html";
+        } else {
+            alert("Booking failed. Try again!");
+        }
+    } catch(err) {
+        console.error(err);
+        alert("Error submitting the form");
+    }
 });
 </script>
-
+<script src="script.js"></script>
 </body>
 </html>
