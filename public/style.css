@@ -1,3 +1,7 @@
+/* Import another CSS file at the top */
+@import url("form.css");
+
+/* Reset & base styles */
 * {
     margin: 0;
     padding: 0;
@@ -13,10 +17,11 @@ body {
     align-items: center;
 }
 
+/* Container for forms */
 .container {
     background: white;
-    padding: 25px 30px;   /* reduced space */
-    width: 320px;         /* smaller width */
+    padding: 25px 30px;
+    width: 320px;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     text-align: center;
@@ -51,6 +56,8 @@ button {
 button:hover {
     background-color: #388E3C;
 }
+
+/* Home page styles */
 .home-container {
     height: 100vh;
     display: flex;
@@ -85,6 +92,8 @@ button:hover {
 .btn:hover {
     background: #e8f5e9;
 }
+
+/* Form label & select */
 label {
     display: block;
     margin-top: 10px;
