@@ -1,16 +1,11 @@
 {
-  "name": "agroslotsbackend",
+  "name": "agroslots",
   "version": "1.0.0",
-  "description": "",
+  "description": "Agro Slots OTP Project on Vercel",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "keywords": [],
+  "scripts": {},
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "dependencies": {
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",

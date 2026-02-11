@@ -6,7 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
+<script>
+async function generateOTP() {
+  const res = await fetch('/api/server');
+  const data = await res.json();
 
+  if (data.success) {
+    alert("Your OTP is: " + data.otp);
+  } else {
+    alert("Error generating OTP");
+  }
+}
+</script>
+
+<button onclick="generateOTP()">Generate OTP</button>
 <body>
 
 <div class="container">
@@ -54,9 +67,10 @@
 </div>
 
 <script>
-const form = document.getElementById('slotForm');
+const form = document.querySelector('Form');
 
-form.addEventListener('submit', async (e) => {
+form.addEventListener('submit', function(e)
+{
     e.preventDefault();
 
     const data = {
