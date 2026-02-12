@@ -1,37 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>AgroSlots Booking</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>AgroSlots Booking</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>🌿 AgroSlots Farmer Booking</h1>
-
+<div id="bookingFormSection">
+    <h1>🌾 Book Agro Slot</h1>
     <form id="slotForm">
-        <input type="text" id="farmerName" placeholder="Farmer Full Name" required>
-        <input type="text" id="village" placeholder="Village Name" required>
+        <input type="text" id="farmerName" placeholder="Farmer Name" required>
+        <input type="text" id="village" placeholder="Village" required>
 
-        <!-- Crop Details -->
-        <label for="cropSelect">Select Crop:</label>
+        <label>Crop Name:</label>
         <select id="cropSelect" required>
-            <option value="">-- Select Crop --</option>
+            <option value="">--Select Crop--</option>
         </select>
 
-        <!-- Industry -->
-        <label for="industrySelect">Select Industry:</label>
+        <label>Industry Name:</label>
         <select id="industrySelect" required>
-            <option value="">-- Select Industry --</option>
+            <option value="">--Select Industry--</option>
         </select>
 
-        <label>Industry Location:</label>
-        <input type="text" id="industryLocation" readonly>
+        <input type="text" id="industryLocation" readonly placeholder="Industry Location">
 
-        <!-- Crop Quality Rating -->
-        <label for="rating">Crop Quality Rating:</label>
+        <label>Crop Quality Rating:</label>
         <select id="rating" required>
             <option value="">Select Rating</option>
             <option value="1">⭐ 1 - Poor</option>
@@ -41,7 +36,6 @@
             <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
         </select>
 
-        <!-- Slot Details -->
         <input type="date" id="date" required>
         <select id="time" required>
             <option value="">Select Time Slot</option>
@@ -53,19 +47,6 @@
 
         <button type="submit">Book Slot</button>
     </form>
-
-    <!-- Booking Output -->
-    <div id="output" style="margin-top:20px; display:none; border:1px solid #ccc; padding:10px;">
-        <h3>Booking Details:</h3>
-        <p><strong>Farmer Name:</strong> <span id="outFarmerName"></span></p>
-        <p><strong>Village Name:</strong> <span id="outVillage"></span></p>
-        <p><strong>Crop Name:</strong> <span id="outCrop"></span></p>
-        <p><strong>Industry:</strong> <span id="outIndustry"></span></p>
-        <p><strong>Location:</strong> <span id="outLocation"></span></p>
-        <p><strong>Crop Rating:</strong> <span id="outRating"></span></p>
-        <p><strong>Date:</strong> <span id="outDate"></span></p>
-        <p><strong>Time Slot:</strong> <span id="outTime"></span></p>
-    </div>
 </div>
 
 <script src="script.js"></script>
