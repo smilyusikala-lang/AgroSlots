@@ -2,31 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AgroSlots</title>
+    <title>AgroSlots Booking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>🌿 Agro Slots Booking</h1>
-    <p class="subtitle">Enter Farmer & Crop Details</p>
-
-    <button type="button" onclick="generateOTP()">Generate OTP</button>
+    <h1>🌿 AgroSlots Farmer Booking</h1>
 
     <form id="slotForm">
-        <!-- Farmer Details -->
         <input type="text" id="farmerName" placeholder="Farmer Full Name" required>
         <input type="text" id="village" placeholder="Village Name" required>
 
         <!-- Crop Details -->
-        <input type="text" id="crop" placeholder="Crop Name" required>
-        <input type="number" id="quantity" placeholder="Crop Quantity (in Kg)" required>
+        <label for="cropSelect">Select Crop:</label>
+        <select id="cropSelect" required>
+            <option value="">-- Select Crop --</option>
+        </select>
 
-        <input type="text" id="industryName" placeholder="Industry Name" required>
-        <input type="text" id="industryLocation" placeholder="Industry Location" required>
+        <!-- Industry -->
+        <label for="industrySelect">Select Industry:</label>
+        <select id="industrySelect" required>
+            <option value="">-- Select Industry --</option>
+        </select>
 
-        <label>Crop Quality Rating:</label>
+        <label>Industry Location:</label>
+        <input type="text" id="industryLocation" readonly>
+
+        <!-- Crop Quality Rating -->
+        <label for="rating">Crop Quality Rating:</label>
         <select id="rating" required>
             <option value="">Select Rating</option>
             <option value="1">⭐ 1 - Poor</option>
@@ -48,60 +53,21 @@
 
         <button type="submit">Book Slot</button>
     </form>
+
+    <!-- Booking Output -->
+    <div id="output" style="margin-top:20px; display:none; border:1px solid #ccc; padding:10px;">
+        <h3>Booking Details:</h3>
+        <p><strong>Farmer Name:</strong> <span id="outFarmerName"></span></p>
+        <p><strong>Village Name:</strong> <span id="outVillage"></span></p>
+        <p><strong>Crop Name:</strong> <span id="outCrop"></span></p>
+        <p><strong>Industry:</strong> <span id="outIndustry"></span></p>
+        <p><strong>Location:</strong> <span id="outLocation"></span></p>
+        <p><strong>Crop Rating:</strong> <span id="outRating"></span></p>
+        <p><strong>Date:</strong> <span id="outDate"></span></p>
+        <p><strong>Time Slot:</strong> <span id="outTime"></span></p>
+    </div>
 </div>
 
-<script>
-async function generateOTP() {
-    try {
-        const res = await fetch('/api/server'); // make sure backend URL is correct
-        const data = await res.json();
-        if (data.success) {
-            alert("Your OTP is: " + data.otp);
-        } else {
-            alert("Error generating OTP");
-        }
-    } catch(err) {
-        console.error(err);
-        alert("Backend error while generating OTP");
-    }
-}
-
-const form = document.getElementById('slotForm');
-
-form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const data = {
-        farmerName: document.getElementById('farmerName').value,
-        village: document.getElementById('village').value,
-        crop: document.getElementById('crop').value,
-        quantity: document.getElementById('quantity').value,
-        industryName: document.getElementById('industryName').value,
-        industryLocation: document.getElementById('industryLocation').value,
-        rating: document.getElementById('rating').value,
-        date: document.getElementById('date').value,
-        time: document.getElementById('time').value
-    };
-
-    try {
-        const response = await fetch('/book', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-        if(result.success){
-            window.location.href = "success.html";
-        } else {
-            alert("Booking failed. Try again!");
-        }
-    } catch(err) {
-        console.error(err);
-        alert("Error submitting the form");
-    }
-});
-</script>
 <script src="script.js"></script>
 </body>
 </html>

@@ -2,19 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Booking Successful</title>
+    <title>Booking Status - AgroSlots</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        .success { color: green; }
+        .failed { color: red; }
+        button { padding: 10px 20px; font-size: 16px; margin-top: 20px; cursor: pointer; }
+    </style>
 </head>
-
 <body>
 
-    <div class="home-container">
-        <h1>✅ Slot Booked Successfully!</h1>
-        <p>Your appointment for crop selling has been confirmed.</p>
+<h1 id="statusMessage"></h1>
+<button id="homeBtn">Go to Home Page</button>
 
-        <a href="home.html" class="btn">Go to Home</a>
-    </div>
+<script>
+    // Get query param from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status'); // "success" or "failed"
+
+    const statusMessage = document.getElementById('statusMessage');
+    const homeBtn = document.getElementById('homeBtn');
+
+    if(status === "success") {
+        statusMessage.textContent = "✅ Booking Successful!";
+        statusMessage.classList.add("success");
+    } else {
+        statusMessage.textContent = "❌ Booking Failed!";
+        statusMessage.classList.add("failed");
+    }
+
+    // Go back to home page
+    homeBtn.addEventListener('click', () => {
+        window.location.href = "index.html"; // replace with your home page if different
+    });
+</script>
 
 </body>
 </html>

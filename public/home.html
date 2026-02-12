@@ -2,51 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>AgroSlots Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroSlots OTP</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="otp-container">
-    <h1>🌿 AgroSlots</h1>
-    <p>Enter your phone number to receive OTP</p>
+<div class="container">
+    <h1>🌿 AgroSlots Registration</h1>
 
-    <input type="text" id="phone" placeholder="Enter Phone Number" required>
-    <button id="generateOtpBtn">Generate OTP</button>
+    <!-- Registration Section -->
+    <div id="registration">
+        <input type="text" id="phone" placeholder="Enter your phone number" required>
+        <button type="button" id="generateBtn">Generate OTP</button>
+
+        <!-- OTP Input hidden until generated -->
+        <div id="otpSection" style="display:none; margin-top:10px;">
+            <input type="text" id="otpInput" placeholder="Enter OTP">
+            <button type="button" id="verifyBtn">Verify OTP</button>
+        </div>
+
+        <button type="button" id="registerBtn" disabled style="margin-top:10px;">Register</button>
+    </div>
 </div>
 
-<script>
-document.getElementById('generateOtpBtn').addEventListener('click', async () => {
-    const phone = document.getElementById('phone').value.trim();
-
-    if (!phone) {
-        alert("Please enter your phone number");
-        return;
-    }
-
-    try {
-        const res = await fetch('https://your-backend.vercel.app/api/generate-otp', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone })
-        });
-
-        const data = await res.json();
-
-        if (data.success) {
-            alert("Your OTP is: " + data.otp);
-            // After successful OTP, redirect to main page
-            window.location.href = "main.html"; // change to your main page
-        } else {
-            alert("Error generating OTP");
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Server error. Try again later.");
-    }
-});
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
