@@ -17,10 +17,15 @@
         <!-- Farmer Details -->
         <input type="text" id="name" placeholder="Farmer Full Name" required>
 
-        <input type="text" id="location" placeholder="Village / Location" required>
+        <select id="crop" required>
+            <option value="">-- Select Crop --</option>
+         </select>
 
-        <!-- Crop Details -->
-        <input type="text" id="crop" placeholder="Crop Name" required>
+        <select id="industry" required>
+            <option value="">-- Select Industry --</option>
+        </select>
+
+    <p id="location"></p>
 
         <input type="number" id="quantity" placeholder="Crop Quantity (in Kg)" required>
 
@@ -65,7 +70,7 @@ form.addEventListener('submit', async (e) => {
         time: document.getElementById('time').value
     };
 
-    await fetch('/book', {
+    await fetch('/api/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
