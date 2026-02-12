@@ -1,13 +1,10 @@
-export default function handler(req, res) {
-  if(req.method === 'POST') {
+module.exports = (req, res) => {
     const { phone } = req.body;
-    if(!phone) return res.status(400).json({ success: false, message: "Phone number required" });
 
-    const otp = Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
-    console.log(`OTP for ${phone}: ${otp}`); // for testing
+    if (!phone) {
+        return res.status(400).json({ success: false });
+    }
 
+    const otp = Math.floor(100000 + Math.random() * 900000);
     res.status(200).json({ success: true, otp });
-  } else {
-    res.status(405).json({ success: false, message: "Method not allowed" });
-  }
-}
+};
