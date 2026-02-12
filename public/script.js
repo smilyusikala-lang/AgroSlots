@@ -1,40 +1,37 @@
 // ===================== HOME PAGE (OTP) =====================
 
 function generateOTP() {
-    const phoneInput = document.getElementById("phone");
-    if (!phoneInput) return;
+  const phone = document.getElementById("phone").value;
 
-    const phone = phoneInput.value.trim();
-
-    if (!phone) {
-        alert("Enter phone number");
-        return;
-    }
-
-    fetch('/api/generate-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            alert("Your OTP is: " + data.otp);
-        } else {
-            alert("OTP generation failed");
-        }
-    });
+  fetch('/api/generate-otp', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert("Your OTP: " + data.otp);
+  });
 }
 
-function registerUser() {
-    const otpInput = document.getElementById("otp");
-    if (!otpInput) return;
+function bookSlot() {
+  const data = {
+    crop: document.getElementById("crop").value,
+    industry: document.getElementById("industry").value,
+    village: document.getElementById("village").value
+  };
 
-    if (otpInput.value.length === 6) {
-        window.location.href = "index.html";
-    } else {
-        alert("Enter correct OTP");
+  fetch('/api/book', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      window.location.href = "success.html";
     }
+  });
 }
 
 
