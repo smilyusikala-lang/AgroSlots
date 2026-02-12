@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Agro Slots </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <title>AgroSlots - Home</title>
 </head>
+<body style="text-align:center; margin-top:100px; font-family:Arial;">
 
-<body>
+    <h1>🌿 Welcome to AgroSlots</h1>
 
-    <div class="home-container">
-        <h1>🌾 Welcome to Agro Slots</h1>
-        <p>Digital Appointment System for Seamless Crop Sales</p>
+    <br>
 
-        <a href="index.html" class="btn">Book Your Slot</a>
-    </div>
+    <input type="text" id="phone" placeholder="Enter Phone Number">
+    <br><br>
 
+    <input type="text" id="otp" placeholder="Enter OTP">
+    <br><br>
+
+    <button onclick="generateOTP()">Generate OTP</button>
+    <button onclick="registerUser()">Register</button>
+
+    <script src="script.js"></script>
 </body>
 </html>

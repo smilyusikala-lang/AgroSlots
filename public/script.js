@@ -1,140 +1,131 @@
-document.addEventListener('DOMContentLoaded', () => {
+// ===================== HOME PAGE (OTP) =====================
 
-    // ---------------- Home Page OTP -----------------
-    const registration = document.getElementById('registration');
-    const generateBtn = document.getElementById('generateBtn');
-    const verifyBtn = document.getElementById('verifyBtn');
-    const registerBtn = document.getElementById('registerBtn');
-    const otpSection = document.getElementById('otpSection');
-    const phoneInput = document.getElementById('phone');
-    const otpInput = document.getElementById('otpInput');
+function generateOTP() {
+    const phoneInput = document.getElementById("phone");
+    if (!phoneInput) return;
 
-    let currentOTP = null;
+    const phone = phoneInput.value.trim();
 
-    if(generateBtn){  // Only run if on home.html
-        generateBtn.addEventListener('click', async () => {
-            const phone = phoneInput.value.trim();
-            if(!phone) return alert("Enter phone number");
-
-            try {
-                // Call backend OTP generation
-                const res = await fetch('/api/generate-otp', {
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body:JSON.stringify({phone})
-                });
-                const data = await res.json();
-                if(data.success){
-                    currentOTP = data.otp;
-                    alert("OTP: " + currentOTP); // For testing only
-                    otpSection.style.display = 'block';
-                } else alert("Failed to generate OTP");
-            } catch(err){ console.error(err); alert("Server error"); }
-        });
-
-        verifyBtn.addEventListener('click', ()=>{
-            if(otpInput.value.trim()===currentOTP.toString()){
-                alert("OTP Verified!");
-                registerBtn.disabled = false;
-            } else {
-                alert("Incorrect OTP");
-                registerBtn.disabled = true;
-            }
-        });
-
-        registerBtn.addEventListener('click', ()=>{
-            window.location.href = "index.html";
-        });
+    if (!phone) {
+        alert("Enter phone number");
+        return;
     }
 
-    // ---------------- Index Page Booking Form -----------------
-    const bookingFormSection = document.getElementById('bookingFormSection');
-    const form = document.getElementById('slotForm');
-
-    const cropIndustries = [
-        { crop:"Rice", industry:"Rice Mills", village:"Nalgonda", state:"Telangana" },
-        { crop:"Sugarcane", industry:"Sugar Factory", village:"Siddipet", state:"Telangana" },
-        { crop:"Wheat", industry:"Food Processing Unit", village:"Warangal", state:"Telangana" },
-        { crop:"Oilseeds", industry:"Oil Extraction Unit", village:"Medak", state:"Telangana" },
-        { crop:"Fruits & Vegetables", industry:"Fruit & Vegetable Processing Unit", village:"Karimnagar", state:"Telangana" },
-        { crop:"Milk", industry:"Dairy Cooperative", village:"Hyderabad", state:"Telangana" }
-    ];
-
-    if(form){ // Only run if on index.html
-        const cropSelect = document.getElementById("cropSelect");
-        const industrySelect = document.getElementById("industrySelect");
-        const industryLocation = document.getElementById("industryLocation");
-
-        // Populate crops
-        [...new Set(cropIndustries.map(c=>c.crop))].forEach(c=>{
-            const opt = document.createElement("option");
-            opt.value=c; opt.textContent=c; cropSelect.appendChild(opt);
-        });
-
-        // Populate industries
-        [...new Set(cropIndustries.map(i=>i.industry))].forEach(i=>{
-            const opt = document.createElement("option");
-            opt.value=i; opt.textContent=i; industrySelect.appendChild(opt);
-        });
-
-        // Update Industry Location
-        function updateIndustryLocation(){
-            const selectedCrop = cropSelect.value;
-            const selectedIndustry = industrySelect.value;
-            const item = cropIndustries.find(i=>i.crop===selectedCrop && i.industry===selectedIndustry);
-            industryLocation.value = item ? `${item.village}, ${item.state}` : "";
+    fetch('/api/generate-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Your OTP is: " + data.otp);
+        } else {
+            alert("OTP generation failed");
         }
-        cropSelect.addEventListener('change', updateIndustryLocation);
-        industrySelect.addEventListener('change', updateIndustryLocation);
+    });
+}
 
-        // Booking submission
-        form.addEventListener('submit', async e=>{
-            e.preventDefault();
-            const selectedCrop = cropSelect.value;
-            const selectedIndustry = industrySelect.value;
-            const selectedItem = cropIndustries.find(i=>i.crop===selectedCrop && i.industry===selectedIndustry);
+function registerUser() {
+    const otpInput = document.getElementById("otp");
+    if (!otpInput) return;
 
-            const data = {
-                farmerName: document.getElementById('farmerName').value,
-                village: document.getElementById('village').value,
-                crop: selectedCrop,
-                industryName: selectedIndustry,
-                industryLocation: selectedItem ? `${selectedItem.village}, ${selectedItem.state}` : "",
-                rating: document.getElementById('rating').value,
-                date: document.getElementById('date').value,
-                time: document.getElementById('time').value
-            };
+    if (otpInput.value.length === 6) {
+        window.location.href = "index.html";
+    } else {
+        alert("Enter correct OTP");
+    }
+}
 
-            try{
-                const res = await fetch('/api/book',{
-                    method:'POST',
-                    headers:{'Content-Type':'application/json'},
-                    body: JSON.stringify(data)
-                });
-                const result = await res.json();
-                if(result.success) window.location.href="success.html?status=success";
-                else window.location.href="success.html?status=failed";
-            } catch(err){
-                console.error(err);
-                window.location.href="success.html?status=failed";
+
+// ===================== INDEX PAGE DATA =====================
+
+// Crop names
+const crops = [
+    "Rice",
+    "Wheat",
+    "Maize",
+    "Sugarcane",
+    "Cotton",
+    "Turmeric"
+];
+
+// Industries with village & state
+const industries = [
+    { name: "Nizamabad Rice Mill", village: "Nizamabad", state: "Telangana" },
+    { name: "Kamareddy Sugar Factory", village: "Kamareddy", state: "Telangana" },
+    { name: "Karimnagar Food Processing Unit", village: "Karimnagar", state: "Telangana" },
+    { name: "Warangal Oil Extraction Unit", village: "Warangal", state: "Telangana" }
+];
+
+window.addEventListener("load", function () {
+
+    const cropSelect = document.getElementById("crop");
+    const industrySelect = document.getElementById("industry");
+
+    // Fill crops
+    if (cropSelect) {
+        crops.forEach(crop => {
+            const option = document.createElement("option");
+            option.value = crop;
+            option.textContent = crop;
+            cropSelect.appendChild(option);
+        });
+    }
+
+    // Fill industries
+    if (industrySelect) {
+        industries.forEach((ind, index) => {
+            const option = document.createElement("option");
+            option.value = index;
+            option.textContent = ind.name;
+            industrySelect.appendChild(option);
+        });
+
+        // Show location on select
+        industrySelect.addEventListener("change", function () {
+            const location = document.getElementById("location");
+            const ind = industries[this.value];
+
+            if (ind) {
+                location.textContent =
+                    "Location: " + ind.village + ", " + ind.state;
+            } else {
+                location.textContent = "";
             }
         });
     }
-
-    // ---------------- Success Page -----------------
-    const statusSection = document.getElementById('statusSection');
-    if(statusSection){  // Only run if on success.html
-        const params = new URLSearchParams(window.location.search);
-        const status = params.get('status');
-        const statusMessage = document.getElementById('statusMessage');
-        const goHomeBtn = document.getElementById('goHomeBtn');
-
-        if(status === "success") statusMessage.textContent = "✅ Booking Successful!";
-        else statusMessage.textContent = "❌ Booking Failed!";
-
-        goHomeBtn.addEventListener('click', ()=>{
-            window.location.href = "home.html";
-        });
-    }
-
 });
+
+
+// ===================== BOOKING =====================
+
+function bookSlot() {
+    const farmerName = document.getElementById("farmerName").value;
+    const village = document.getElementById("village").value;
+    const crop = document.getElementById("crop").value;
+    const industryIndex = document.getElementById("industry").value;
+
+    const industry = industries[industryIndex];
+
+    fetch('/api/api-book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            farmerName,
+            village,
+            crop,
+            industryName: industry.name,
+            industryVillage: industry.village,
+            industryState: industry.state
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = "success.html";
+        } else {
+            window.location.href = "home.html";
+        }
+    });
+}
