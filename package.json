@@ -1,16 +1,5 @@
 {
   "name": "agroslots",
   "version": "1.0.0",
-  "description": "Agro Slots OTP Project on Vercel",
-  "main": "server.js",
-  "scripts": {},
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^2.2.2",
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
-    "mysql": "^2.18.1",
-    "twilio": "^5.12.1"
-  }
+  "type": "module"
 }
