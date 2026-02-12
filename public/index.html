@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>AgroSlots Booking</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>AgroSlots</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div id="bookingFormSection">
-    <h1>🌾 Book Agro Slot</h1>
+<div class="container">
+    <h1>🌿 Agro Slots Booking</h1>
+    <p class="subtitle">Enter Farmer & Crop Details</p>
+
     <form id="slotForm">
-        <input type="text" id="farmerName" placeholder="Farmer Name" required>
-        <input type="text" id="village" placeholder="Village" required>
 
-        <label>Crop Name:</label>
-        <select id="cropSelect" required>
-            <option value="">--Select Crop--</option>
-        </select>
+        <!-- Farmer Details -->
+        <input type="text" id="name" placeholder="Farmer Full Name" required>
 
-        <label>Industry Name:</label>
-        <select id="industrySelect" required>
-            <option value="">--Select Industry--</option>
-        </select>
+        <input type="tel" id="mobile" placeholder="Mobile Number"
+               pattern="[0-9]{10}" maxlength="10" required>
 
-        <input type="text" id="industryLocation" readonly placeholder="Industry Location">
+        <input type="text" id="location" placeholder="Village / Location" required>
+
+        <!-- Crop Details -->
+        <input type="text" id="crop" placeholder="Crop Name" required>
+
+        <input type="number" id="quantity" placeholder="Crop Quantity (in Kg)" required>
 
         <label>Crop Quality Rating:</label>
         <select id="rating" required>
@@ -36,7 +38,9 @@
             <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
         </select>
 
+        <!-- Slot Details -->
         <input type="date" id="date" required>
+
         <select id="time" required>
             <option value="">Select Time Slot</option>
             <option>09:00 AM</option>
@@ -49,6 +53,32 @@
     </form>
 </div>
 
-<script src="script.js"></script>
+<script>
+const form = document.getElementById('slotForm');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = {
+        name: document.getElementById('name').value,
+        mobile: document.getElementById('mobile').value,
+        location: document.getElementById('location').value,
+        crop: document.getElementById('crop').value,
+        quantity: document.getElementById('quantity').value,
+        rating: document.getElementById('rating').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value
+    };
+
+    await fetch('/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+
+    window.location.href = "success.html";
+});
+</script>
+
 </body>
 </html>

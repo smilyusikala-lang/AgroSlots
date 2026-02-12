@@ -1,4 +1,3 @@
-/* Reset default browser styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,81 +5,61 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Body style */
 body {
+    height: 100vh;
     background: linear-gradient(120deg, #4CAF50, #2E7D32);
-    min-height: 100vh;
-    padding: 20px;
-    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Container for the form */
 .container {
     background: white;
-    padding: 25px 30px;
-    max-width: 500px;
-    margin: 40px auto; /* positions form away from top, not center */
+    padding: 25px 30px;   /* reduced space */
+    width: 320px;         /* smaller width */
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
-/* Headings */
 h1 {
     margin-bottom: 15px;
-    font-size: 26px;
+    font-size: 22px;
     color: #2E7D32;
-    text-align: center;
 }
 
-.subtitle {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* Inputs and select boxes */
-input, select {
+input {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     margin: 8px 0;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
 
-label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-/* Buttons */
 button {
     margin-top: 12px;
-    padding: 10px;
+    padding: 9px;
     width: 100%;
     border: none;
     border-radius: 5px;
     background-color: #4CAF50;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
 }
 
 button:hover {
     background-color: #388E3C;
 }
-
-/* OTP button style */
-button[type="button"] {
-    margin-bottom: 20px;
-}
-
-/* Home page container (if needed) */
 .home-container {
-    padding: 40px 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: linear-gradient(120deg, #2E7D32, #66BB6A);
     color: white;
+    text-align: center;
 }
 
 .home-container h1 {
@@ -105,4 +84,16 @@ button[type="button"] {
 
 .btn:hover {
     background: #e8f5e9;
+}
+label {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
 }
