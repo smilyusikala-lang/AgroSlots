@@ -1,97 +1,95 @@
-// ===================== OTP =====================
+/* -------------------------
+   DROPDOWN DATA
+------------------------- */
+const crops = ["Wheat", "Rice", "Maize", "Barley"];
+const industries = ["Dairy", "Sugar", "Textiles", "Food Processing"];
 
-function generateOTP() {
-  const phone = document.getElementById("phone").value;
+/* -------------------------
+   POPULATE DROPDOWNS
+------------------------- */
+const cropSelect = document.getElementById("crop");
+const industrySelect = document.getElementById("industry");
 
-  fetch('/api/generate-otp', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ phone })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      alert("Your OTP: " + data.otp);
-    } else {
-      alert("Failed to generate OTP");
-    }
-  });
+if (cropSelect) {
+    crops.forEach(crop => {
+        const option = document.createElement("option");
+        option.value = crop;
+        option.textContent = crop;
+        cropSelect.appendChild(option);
+    });
 }
 
-
-// ===================== DATA =====================
-
-const crops = ["Rice","Wheat","Maize","Sugarcane","Cotton","Turmeric"];
-
-const industries = [
-  { name: "Nizamabad Rice Mill", village: "Nizamabad", state: "Telangana" },
-  { name: "Kamareddy Sugar Factory", village: "Kamareddy", state: "Telangana" },
-  { name: "Karimnagar Food Processing Unit", village: "Karimnagar", state: "Telangana" },
-  { name: "Warangal Oil Extraction Unit", village: "Warangal", state: "Telangana" }
-];
-
-window.addEventListener("load", function () {
-
-  const cropSelect = document.getElementById("crop");
-  const industrySelect = document.getElementById("industry");
-
-  if (cropSelect) {
-    crops.forEach(crop => {
-      const option = document.createElement("option");
-      option.value = crop;
-      option.textContent = crop;
-      cropSelect.appendChild(option);
+if (industrySelect) {
+    industries.forEach(ind => {
+        const option = document.createElement("option");
+        option.value = ind;
+        option.textContent = ind;
+        industrySelect.appendChild(option);
     });
-  }
+}
 
-  if (industrySelect) {
-    industries.forEach((ind, index) => {
-      const option = document.createElement("option");
-      option.value = index;
-      option.textContent = ind.name;
-      industrySelect.appendChild(option);
-    });
+/* -------------------------
+   OTP GENERATION & SIMULATION
+------------------------- */
+let generatedOtp = null;
 
-    industrySelect.addEventListener("change", function () {
-      const location = document.getElementById("location");
-      const ind = industries[this.value];
+function generateOtp() {
+    const phone = prompt("Enter your phone number:");
+    if (!phone) return alert("Phone number is required");
 
-      location.textContent = ind
-        ? "Location: " + ind.village + ", " + ind.state
-        : "";
-    });
-  }
-});
+    // Generate a 4-digit OTP
+    generatedOtp = Math.floor(1000 + Math.random() * 9000);
+    alert("Your OTP is: " + generatedOtp);
 
-
-// ===================== BOOKING =====================
-
-function bookSlot() {
-  const farmerName = document.getElementById("farmerName").value;
-  const village = document.getElementById("village").value;
-  const crop = document.getElementById("crop").value;
-  const industryIndex = document.getElementById("industry").value;
-
-  const industry = industries[industryIndex];
-
-  fetch('/api/book', {   // ✅ fixed URL
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      farmerName,
-      village,
-      crop,
-      industryName: industry.name,
-      industryVillage: industry.village,
-      industryState: industry.state
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      window.location.href = "success.html";
+    // Optional: Ask user to enter OTP
+    const otpInput = prompt("Enter the OTP:");
+    if (parseInt(otpInput) === generatedOtp) {
+        alert("OTP Verified! Redirecting to Booking Page.");
+        window.location.href = "booking.html";
     } else {
-      alert("Booking failed");
+        alert("Incorrect OTP. Try again.");
     }
-  });
+}
+
+/* -------------------------
+   BOOKING FORM SUBMISSION
+------------------------- */
+const form = document.getElementById("slotForm");
+
+if (form) {
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Collect form data
+        const data = {
+            name: document.getElementById("name").value,
+            crop: document.getElementById("crop").value,
+            industry: document.getElementById("industry").value,
+            location: document.getElementById("location").textContent || "Unknown",
+            quantity: document.getElementById("quantity").value,
+            rating: document.getElementById("rating").value,
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value
+        };
+
+        try {
+            // Send booking data to backend
+            const response = await fetch("/api/book", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                // Redirect to success page
+                window.location.href = "success.html";
+            } else {
+                alert("Booking failed. Please try again.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error connecting to server.");
+        }
+    });
 }

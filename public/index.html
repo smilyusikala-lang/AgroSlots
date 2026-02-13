@@ -19,13 +19,13 @@
 
         <select id="crop" required>
             <option value="">-- Select Crop --</option>
-         </select>
+        </select>
 
         <select id="industry" required>
             <option value="">-- Select Industry --</option>
         </select>
 
-    <p id="location"></p>
+        <p id="location"></p>
 
         <input type="number" id="quantity" placeholder="Crop Quantity (in Kg)" required>
 
@@ -54,32 +54,6 @@
     </form>
 </div>
 
-<script>
-const form = document.getElementById('slotForm');
-
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const data = {
-        name: document.getElementById('name').value,
-        location: document.getElementById('location').value,
-        crop: document.getElementById('crop').value,
-        quantity: document.getElementById('quantity').value,
-        rating: document.getElementById('rating').value,
-        date: document.getElementById('date').value,
-        time: document.getElementById('time').value
-    };
-
-    await fetch('/api/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-    });
-
-    window.location.href = "success.html";
-});
-</script>
-<p id="location"></p>
 <script src="script.js"></script>
 </body>
 </html>

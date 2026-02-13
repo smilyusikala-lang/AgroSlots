@@ -1,3 +1,4 @@
+/* Reset & Global Styles */
 * {
     margin: 0;
     padding: 0;
@@ -6,17 +7,17 @@
 }
 
 body {
-    height: 100vh;
-    background: linear-gradient(120deg, #4CAF50, #2E7D32);
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* Container for Booking Form */
 .container {
     background: white;
-    padding: 25px 30px;   /* reduced space */
-    width: 320px;         /* smaller width */
+    padding: 25px 30px;
+    width: 320px;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     text-align: center;
@@ -24,18 +25,32 @@ body {
 
 h1 {
     margin-bottom: 15px;
-    font-size: 22px;
     color: #2E7D32;
+    font-size: 22px;
 }
 
-input {
+.subtitle {
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* Inputs & Selects */
+input, select {
     width: 100%;
     padding: 8px;
     margin: 8px 0;
     border-radius: 5px;
     border: 1px solid #ccc;
+    transition: 0.3s;
 }
 
+input:focus, select:focus {
+    border-color: #2E7D32;
+    outline: none;
+}
+
+/* Buttons */
 button {
     margin-top: 12px;
     padding: 9px;
@@ -46,11 +61,22 @@ button {
     color: white;
     font-size: 15px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 button:hover {
     background-color: #388E3C;
 }
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 10px;
+    text-align: left;
+    font-weight: bold;
+}
+
+/* Homepage Styles */
 .home-container {
     height: 100vh;
     display: flex;
@@ -60,6 +86,7 @@ button:hover {
     background: linear-gradient(120deg, #2E7D32, #66BB6A);
     color: white;
     text-align: center;
+    padding: 20px;
 }
 
 .home-container h1 {
@@ -72,6 +99,7 @@ button:hover {
     margin-bottom: 30px;
 }
 
+/* Buttons on Homepage */
 .btn {
     padding: 12px 25px;
     background: white;
@@ -85,15 +113,27 @@ button:hover {
 .btn:hover {
     background: #e8f5e9;
 }
-label {
-    display: block;
-    margin-top: 10px;
-    text-align: left;
-    font-weight: bold;
+
+/* Location Paragraph */
+#location {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 10px;
 }
 
-select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
+/* Responsive Design */
+@media (max-width: 400px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+    h1 {
+        font-size: 20px;
+    }
+    .home-container h1 {
+        font-size: 28px;
+    }
+    .home-container p {
+        font-size: 16px;
+    }
 }
