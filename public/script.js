@@ -38,31 +38,28 @@ if (industrySelect) {
 }
 
 /* -------------------------
-   OTP GENERATION & SIMULATION
+   OTP GENERATION
 ------------------------- */
 let generatedOtp = null;
 
-function generateOtp() {
+document.getElementById("generateOtp")?.addEventListener("click", () => {
     const phone = document.getElementById("phone").value;
-    if (!phone) return alert("Phone number is required");
+    if (!phone) return alert("Enter your phone number");
 
-    // Generate a 4-digit OTP
     generatedOtp = Math.floor(1000 + Math.random() * 9000);
     alert("Your OTP is: " + generatedOtp);
 
-    // Show OTP input and verify button (if using input fields)
     document.getElementById("otpInput").style.display = "block";
     document.getElementById("verifyBtn").style.display = "block";
-}
+});
 
-// Verify OTP
 document.getElementById("verifyBtn")?.addEventListener("click", () => {
     const otp = document.getElementById("otpInput").value;
     if (parseInt(otp) === generatedOtp) {
         alert("OTP Verified! You can now book your crop.");
         window.location.href = "booking.html";
     } else {
-        alert("Incorrect OTP. Try again.");
+        alert("Incorrect OTP");
     }
 });
 

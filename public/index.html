@@ -2,19 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AgroSlots</title>
+    <title>AgroSlots - Book Your Crop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h1>🌿 Agro Slots Booking</h1>
-    <p class="subtitle">Enter Farmer & Crop Details</p>
-
+    <h1>🌿 Crop Booking Form</h1>
     <form id="slotForm">
 
-        <!-- Farmer Details -->
         <input type="text" id="name" placeholder="Farmer Full Name" required>
 
         <select id="crop" required>
@@ -25,9 +22,7 @@
             <option value="">-- Select Industry --</option>
         </select>
 
-        <p id="location"></p>
-
-        <input type="number" id="quantity" placeholder="Crop Quantity (in Kg)" required>
+        <input type="number" id="quantity" placeholder="Crop Quantity (Kg)" required>
 
         <label>Crop Quality Rating:</label>
         <select id="rating" required>
@@ -39,7 +34,6 @@
             <option value="5">⭐⭐⭐⭐⭐ 5 - Excellent</option>
         </select>
 
-        <!-- Slot Details -->
         <input type="date" id="date" required>
 
         <select id="time" required>
