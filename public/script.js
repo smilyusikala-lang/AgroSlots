@@ -1,8 +1,15 @@
 /* -------------------------
    DROPDOWN DATA
 ------------------------- */
-const crops = ["Wheat", "Rice", "Maize", "Barley"];
-const industries = ["Dairy", "Sugar", "Textiles", "Food Processing"];
+const crops = ["Wheat", "Rice", "Maize", "Barley", "Millets", "Soybean"];
+
+const industries = [
+    { name: "Agro Flour Mill", village: "Shivpuri", district: "Ahmedabad", state: "Gujarat" },
+    { name: "Rice Processing Plant", village: "Chikhli", district: "Surat", state: "Gujarat" },
+    { name: "Maize Milling Factory", village: "Vagra", district: "Bharuch", state: "Gujarat" },
+    { name: "Barley Storage & Processing", village: "Petlad", district: "Anand", state: "Gujarat" },
+    { name: "Soybean Oil Plant", village: "Borsad", district: "Anand", state: "Gujarat" }
+];
 
 /* -------------------------
    POPULATE DROPDOWNS
@@ -10,6 +17,7 @@ const industries = ["Dairy", "Sugar", "Textiles", "Food Processing"];
 const cropSelect = document.getElementById("crop");
 const industrySelect = document.getElementById("industry");
 
+// Populate crop dropdown
 if (cropSelect) {
     crops.forEach(crop => {
         const option = document.createElement("option");
@@ -19,11 +27,12 @@ if (cropSelect) {
     });
 }
 
+// Populate industry dropdown
 if (industrySelect) {
     industries.forEach(ind => {
         const option = document.createElement("option");
-        option.value = ind;
-        option.textContent = ind;
+        option.value = ind.name;
+        option.textContent = `${ind.name} - ${ind.village}, ${ind.district}, ${ind.state}`;
         industrySelect.appendChild(option);
     });
 }
@@ -34,22 +43,28 @@ if (industrySelect) {
 let generatedOtp = null;
 
 function generateOtp() {
-    const phone = prompt("Enter your phone number:");
+    const phone = document.getElementById("phone").value;
     if (!phone) return alert("Phone number is required");
 
     // Generate a 4-digit OTP
     generatedOtp = Math.floor(1000 + Math.random() * 9000);
     alert("Your OTP is: " + generatedOtp);
 
-    // Optional: Ask user to enter OTP
-    const otpInput = prompt("Enter the OTP:");
-    if (parseInt(otpInput) === generatedOtp) {
-        alert("OTP Verified! Redirecting to Booking Page.");
+    // Show OTP input and verify button (if using input fields)
+    document.getElementById("otpInput").style.display = "block";
+    document.getElementById("verifyBtn").style.display = "block";
+}
+
+// Verify OTP
+document.getElementById("verifyBtn")?.addEventListener("click", () => {
+    const otp = document.getElementById("otpInput").value;
+    if (parseInt(otp) === generatedOtp) {
+        alert("OTP Verified! You can now book your crop.");
         window.location.href = "booking.html";
     } else {
         alert("Incorrect OTP. Try again.");
     }
-}
+});
 
 /* -------------------------
    BOOKING FORM SUBMISSION
@@ -60,12 +75,17 @@ if (form) {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        // Collect form data
+        const selectedIndustry = industries.find(
+            ind => ind.name === industrySelect.value
+        );
+
         const data = {
             name: document.getElementById("name").value,
-            crop: document.getElementById("crop").value,
-            industry: document.getElementById("industry").value,
-            location: document.getElementById("location").textContent || "Unknown",
+            crop: cropSelect.value,
+            industry: selectedIndustry.name,
+            village: selectedIndustry.village,
+            district: selectedIndustry.district,
+            state: selectedIndustry.state,
             quantity: document.getElementById("quantity").value,
             rating: document.getElementById("rating").value,
             date: document.getElementById("date").value,
@@ -73,7 +93,6 @@ if (form) {
         };
 
         try {
-            // Send booking data to backend
             const response = await fetch("/api/book", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -82,7 +101,6 @@ if (form) {
 
             const result = await response.json();
             if (result.success) {
-                // Redirect to success page
                 window.location.href = "success.html";
             } else {
                 alert("Booking failed. Please try again.");
